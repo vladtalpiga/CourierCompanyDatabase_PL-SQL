@@ -1,0 +1,869 @@
+Tălpigă Andrei-Vlad, Grupa 231
+
+4.
+create table vehicul(
+    id_vehicul number(3) primary key,
+    tip_vehicul varchar2(100),
+    an_vehicul number(4)
+);
+
+create table curier(
+    id_curier number(3) primary key,
+    nume_curier varchar2(100),
+    tel_curier number(4),
+    data_ang date not null
+);
+
+create table transport(
+    id_curier number(3) not null,
+    foreign key (id_curier) references curier(id_curier),
+    id_vehicul number(3) not null, 
+    foreign key (id_vehicul) references vehicul(id_vehicul),
+    durata number(3)
+);
+
+create table client(
+    id_client number(3) primary key,
+    nume_client varchar2(100),
+    tel_client number(4),
+    oras_client varchar2(100) not null
+);
+
+create table livrare(
+    id_livrare number(3) primary key,
+    id_curier number(3) not null,
+    foreign key (id_curier) references curier(id_curier),
+    id_client number(3) not null,
+    foreign key (id_client) references client(id_client),
+    pret_livrare number(10),
+    data_livrare date,
+    ora_livrare number(2)
+);
+
+create table colet(
+    id_colet number(3) primary key,
+    id_livrare number(3) not null,
+    foreign key (id_livrare) references livrare(id_livrare),
+    greutate number(5) not null
+);
+
+create table depozit(
+    id_depozit number(3) primary key,
+    tara_depozit varchar2(100)
+);
+
+create table produs(
+    id_produs number(3) primary key,
+    id_depozit number(3) not null,
+    foreign key (id_depozit) references depozit(id_depozit),
+    nume_produs varchar2(200),
+    pret_produs number(10),
+    categorie varchar2(100),
+    garantie number(3)
+);
+
+create table colet_produs(
+    id_colet number(3) not null,
+    foreign key (id_colet) references colet(id_colet),
+    id_produs number(3) not null,
+    foreign key (id_produs) references produs(id_produs)
+);
+
+
+5.
+insert into vehicul (id_vehicul, tip_vehicul, an_vehicul)
+values (700, 'tir', 2014);
+
+insert into vehicul (id_vehicul, tip_vehicul, an_vehicul)
+values (701, 'duba', 2009);
+
+insert into vehicul (id_vehicul, tip_vehicul, an_vehicul)
+values (702, 'avion', 2021);
+
+insert into vehicul (id_vehicul, tip_vehicul, an_vehicul)
+values (703, 'duba', 2017);
+
+insert into vehicul (id_vehicul, tip_vehicul, an_vehicul)
+values (704, 'duba', 2010);
+
+insert into vehicul (id_vehicul, tip_vehicul, an_vehicul)
+values (705, 'tir', 2005);
+
+
+insert into curier (id_curier, nume_curier, tel_curier, data_ang)
+values (100, 'Vlad', 1567, '12-FEB-2009');
+
+insert into curier (id_curier, nume_curier, tel_curier, data_ang)
+values (101, 'John', 1891, '28-SEP-2014');
+
+insert into curier (id_curier, nume_curier, tel_curier, data_ang)
+values (102, 'Dan', 8505, '04-JUL-2022');
+
+insert into curier (id_curier, nume_curier, tel_curier, data_ang)
+values (103, 'Alex', 0912, '19-MAR-2009');
+
+insert into curier (id_curier, nume_curier, tel_curier, data_ang)
+values (104, 'David', 6480, '23-OCT-2015');
+
+insert into curier (id_curier, nume_curier, tel_curier, data_ang)
+values (105, 'Jack', 6157, '02-APR-2012');
+
+
+insert into transport (id_curier, id_vehicul, durata)
+values (100, 704, 12);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (101, 700, 6);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (102, 701, 24);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (103, 705, 12);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (104, 703, 36);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (105, 702, 18);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (100, 701, 18);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (100, 703, 36);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (101, 705, 24);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (102, 703, 6);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (102, 704, 12);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (103, 700, 30);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (104, 701, 12);
+
+insert into transport (id_curier, id_vehicul, durata)
+values (104, 704, 18);
+
+
+insert into client (id_client, nume_client, tel_client, oras_client)
+values (200, 'Raul', 1898, 'Tokyo');
+
+insert into client (id_client, nume_client, tel_client, oras_client)
+values (201, 'Laura', 7645, 'Roma');
+
+insert into client (id_client, nume_client, tel_client, oras_client)
+values (202, 'Chris', 3271, 'Londra');
+
+insert into client (id_client, nume_client, tel_client, oras_client)
+values (203, 'Eric', 6459, 'Barcelona');
+
+insert into client (id_client, nume_client, tel_client, oras_client)
+values (204, 'Maria', 1327, 'Miami');
+
+insert into client (id_client, nume_client, tel_client, oras_client)
+values (205, 'Gabi', 5573, 'Bucuresti');
+
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (300, 100, 205, 20, '02-JAN-2023', 17);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (301, 100, 200, 90, '17-DEC-2021', 12);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (302, 100, 201, 0, '30-JUN-2019', 9);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (303, 101, 205, 120, '09-JUL-2022', 20);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (304, 102, 202, 10, '15-OCT-2019', 8);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (305, 102, 203, 50, '23-MAR-2020', 13);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (306, 103, 205, 30, '27-SEP-2018', 10);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (307, 104, 200, 100, '11-APR-2019', 19);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (308, 104, 204, 60, '04-SEP-2017', 21);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (309, 105, 205, 25, '15-AUG-2022', 8);
+
+insert into livrare (id_livrare, id_curier, id_client, pret_livrare, data_livrare, ora_livrare)
+values (310, 105, 200, 40, '20-AUG-2020', 17);
+
+
+insert into colet (id_colet, id_livrare, greutate)
+values (400, 302, 4);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (401, 307, 1);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (402, 305, 12);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (403, 308, 8);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (404, 306, 3);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (405, 300, 10);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (406, 310, 5);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (407, 304, 8);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (408, 309, 4);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (409, 301, 6);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (410, 307, 20);
+
+insert into colet (id_colet, id_livrare, greutate)
+values (411, 303, 50);
+
+
+insert into depozit (id_depozit, tara_depozit)
+values (600, 'China');
+
+insert into depozit (id_depozit, tara_depozit)
+values (601, 'Belgia');
+
+insert into depozit (id_depozit, tara_depozit)
+values (602, 'Romania');
+
+insert into depozit (id_depozit, tara_depozit)
+values (603, 'Mexic');
+
+insert into depozit (id_depozit, tara_depozit)
+values (604, 'Franta');
+
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (500, 601, 'TV', 4000, 'electronice', 2);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (501, 603, 'creion', 2, 'rechizite', null);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (502, 604, 'boxe', 800, 'electronice', 3);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (503, 601, 'telefon', 3000, 'electronice', 1);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (504, 604, 'dulap', 1500, 'mobila', 1);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (505, 602, 'stilou', 70, 'rechizite', null);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (506, 600, 'masa', 600, 'mobila', 1);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (507, 603, 'canapea', 5000, 'mobila', 2);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (508, 601, 'catan', 300, 'jocuri', null);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (509, 602, 'scaun', 700, 'mobila', 1);
+
+insert into produs (id_produs, id_depozit, nume_produs, pret_produs, categorie, garantie)
+values (510, 601, 'activity', 200, 'jocuri', null);
+
+
+insert into colet_produs(id_colet, id_produs)
+values (400, 508);
+
+insert into colet_produs(id_colet, id_produs)
+values (400, 510);
+
+insert into colet_produs(id_colet, id_produs)
+values (401, 501);
+
+insert into colet_produs(id_colet, id_produs)
+values (401, 505);
+
+insert into colet_produs(id_colet, id_produs)
+values (402, 500);
+
+insert into colet_produs(id_colet, id_produs)
+values (403, 503);
+
+insert into colet_produs(id_colet, id_produs)
+values (403, 506);
+
+insert into colet_produs(id_colet, id_produs)
+values (404, 507);
+
+insert into colet_produs(id_colet, id_produs)
+values (405, 504);
+
+insert into colet_produs(id_colet, id_produs)
+values (405, 510);
+
+insert into colet_produs(id_colet, id_produs)
+values (406, 500);
+
+insert into colet_produs(id_colet, id_produs)
+values (406, 506);
+
+insert into colet_produs(id_colet, id_produs)
+values (406, 508);
+
+insert into colet_produs(id_colet, id_produs)
+values (406, 502);
+
+insert into colet_produs(id_colet, id_produs)
+values (407, 503);
+
+insert into colet_produs(id_colet, id_produs)
+values (408, 505);
+
+insert into colet_produs(id_colet, id_produs)
+values (408, 509);
+
+insert into colet_produs(id_colet, id_produs)
+values (409, 510);
+
+insert into colet_produs(id_colet, id_produs)
+values (409, 501);
+
+insert into colet_produs(id_colet, id_produs)
+values (410, 509);
+
+insert into colet_produs(id_colet, id_produs)
+values (410, 506);
+
+insert into colet_produs(id_colet, id_produs)
+values (411, 502);
+
+
+6.
+--Un client dorește să afle din ce țări provin produsele din colet. 
+--Astfel, să se afișeze toate țările cu depozite care stochează 
+--produse aflate în coletul cu codul dat ca parametru.
+
+create or replace procedure e6
+    (cod_colet colet_produs.id_colet%type)
+as
+    type t_id_produs is table of colet_produs.id_produs%type;
+    t t_id_produs;
+    type t_id_depozit is table of produs.id_depozit%type index by PLS_INTEGER;
+    z t_id_depozit;
+    type dif is varray(6) of number(1);
+    d dif := dif(0, 0, 0, 0, 0);
+    cnt number(3);
+    a number(3);
+    i number(3);
+    verif number(3) := 0;
+    cod_depozit produs.id_depozit%type;
+    aux depozit.tara_depozit%type;
+begin
+    select unique id_colet into verif
+    from colet_produs
+    where id_colet = cod_colet;
+    
+    if verif = 0 then
+        DBMS_OUTPUT.PUT_LINE('Coletul ' || cod_colet || ' nu exista.');
+    else
+        select id_produs bulk collect into t
+        from colet_produs
+        where id_colet = cod_colet;
+        
+        select count(*) into cnt
+        from colet_produs
+        where id_colet = cod_colet;
+        
+        if cnt = 0 then
+            DBMS_OUTPUT.PUT_LINE('Coletul ' || cod_colet || ' nu contine niciun produs.');
+        else
+            DBMS_OUTPUT.PUT_LINE('Coletul ' || cod_colet || ' contine produse din urmatoarele tari:');
+            for i in 1..cnt loop
+                select id_depozit into z(i)
+                from produs
+                where t(i) = id_produs;
+                
+                select tara_depozit into aux
+                from depozit
+                where id_depozit = z(i);
+                
+                a := z(i) - 599;
+                
+                if d(a) = 0 then
+                    d(a) := 1; 
+                    DBMS_OUTPUT.PUT_LINE(aux);
+                end if;
+            end loop;
+        end if;
+    end if;
+end;
+/
+
+begin
+    e6(406);
+end;
+/
+
+
+7.
+--Să se afișeze prețul total al livrărilor efectuate de 
+--curierul cu numele dat ca prim parametru, respectiv numărul 
+--de colete care au maxim greutatea dată ca al doilea 
+--parametru și câte produse conțin în total aceste colete.
+
+create or replace procedure e7
+    (nume curier.nume_curier%type,
+     gr colet.greutate%type)
+as
+    cursor cp (x colet.greutate%type) is
+        select id_colet
+        from colet
+        where greutate <= x;
+        
+    cursor cn is
+        select pret_livrare pl
+        from livrare
+        where id_curier = (select id_curier 
+                            from curier
+                            where nume_curier = nume);
+        
+    cod_colet colet.id_colet%type;
+    suma number(10) := 0;
+    nr_colete number(3) := 0;
+    nr_produse number(4) := 0;
+    aux number(4);
+begin
+    for i in cn loop
+        suma := suma + i.pl;
+    end loop;
+    
+    DBMS_OUTPUT.PUT_LINE('Pretul total al livrarilor efectuate de curierul '|| nume || ' este ' || suma || '.');
+    
+    open cp(gr);
+    loop
+        fetch cp into cod_colet;
+        exit when cp%notfound;
+        
+        select count(*) into aux
+        from colet_produs
+        where cod_colet = id_colet;
+        
+        nr_colete := nr_colete + 1;
+        nr_produse := nr_produse + aux;   
+    end loop;
+    close cp;
+    DBMS_OUTPUT.PUT_LINE('Sunt ' || nr_colete || ' colete care au maxim ' || gr || ' kg si contin in total ' || nr_produse || ' produse.');
+end;
+/
+
+begin
+    e7('David', 10);
+end;
+/
+
+
+8.
+--Să se afișeze câte vehicule poate conduce
+--un curier cu numele dat ca prim parametru. 
+--Vehiculele trebuie să fie produse după anul 
+--dat ca al doilea parametru.
+
+create or replace function e8
+    (nume curier.nume_curier%type, 
+     an vehicul.an_vehicul%type)
+    return number
+is
+    rez number(3);
+    v number(3);
+    curryear number(4);
+begin
+    select count(*) into v
+    from curier
+    where nume_curier = nume;
+    
+    if v = 0 then
+        --DBMS_OUTPUT.PUT_LINE('Nu exista niciun curier cu numele ' || nume || '.');
+        RAISE_APPLICATION_ERROR(-20001, 'Nu exista niciun curier cu numele ' || nume || '.');
+        return -1;
+    end if;
+        
+    select to_char(sysdate, 'YYYY') into curryear
+    from dual;
+        
+    if an < 0 or an > curryear then
+        --DBMS_OUTPUT.PUT_LINE('Anul introdus este invalid.');
+        RAISE_APPLICATION_ERROR(-20002, 'Anul introdus este invalid.');
+        return -1;
+    end if;
+    
+    select count(*) into rez
+    from vehicul v, transport t, curier c
+    where an < v.an_vehicul and
+          v.id_vehicul = t.id_vehicul and 
+          t.id_curier = c.id_curier and 
+          c.nume_curier = nume;
+          
+    DBMS_OUTPUT.PUT_LINE('Numarul de vehicule produse dupa anul ' || an || ' pe care le poate conduce curierul ' || nume || ' este: ');
+    return rez; 
+end;
+/
+
+begin
+    DBMS_OUTPUT.PUT_LINE(e8('David', 2008));
+end;
+/
+
+
+9.
+--Să se afișeze câți lei a cheltuit în total 
+--pe produse clientul cu numele dat ca parametru.
+
+create or replace procedure ex9
+    (nume client.nume_client%type)
+as
+    suma number(11);
+    vf client.id_client%type;
+begin
+-- folosesc acest query pentru a vedea
+-- daca numele clientului este unul valid
+-- astfel, daca numele nu exista in baza
+-- de date, va interveni eroarea
+    select id_client into vf
+    from client
+    where nume_client = nume;
+    
+    select sum(p.pret_produs) into suma
+    from client c
+    join livrare l on c.id_client = l.id_client
+    join colet co on l.id_livrare = co.id_livrare
+    join colet_produs cp on co.id_colet = cp.id_colet
+    join produs p on cp.id_produs = p.id_produs
+    where c.nume_client = nume;
+    DBMS_OUTPUT.PUT_LINE(nume || ' a cumparat produse in valoare de ' || suma || ' lei.');
+    exception
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Clientul ' || nume || ' nu exista.');
+            --DBMS_OUTPUT.PUT_LINE('Clientul ' || nume || ' nu exista.');
+        WHEN TOO_MANY_ROWS THEN
+            RAISE_APPLICATION_ERROR(-20002, 'Too many rows.');
+end;
+/
+
+begin
+    ex9('Raul');
+end;
+/
+
+
+10.
+--În urma unui studiu, am aflat că este profitabil 
+--ca firma noastra de curierat să aibă depozite în 
+--cât mai puține țări diferite. Creați un trigger 
+--care să nu permită să se insereze (înființeze) 
+--depozite în mai mult de 8 țări diferite.
+    
+create or replace trigger limitare_depozite
+    before insert or update on depozit
+declare
+    cnt number(3);
+begin
+    select count(distinct tara_depozit) into cnt
+    from depozit;
+    if cnt > 8 then 
+        RAISE_APPLICATION_ERROR(-20100, 'S-a atins limita de tari diferite inca care putem avea depozite.');
+    end if;
+end;
+/
+
+begin
+    insert into depozit (id_depozit, tara_depozit)
+    values (605, 'Anglia');
+    insert into depozit (id_depozit, tara_depozit)
+    values (606, 'Grecia');
+    insert into depozit (id_depozit, tara_depozit)
+    values (607, 'Egypt');
+    insert into depozit (id_depozit, tara_depozit)
+    values (608, 'Peru');
+    insert into depozit (id_depozit, tara_depozit)
+    values (609, 'India');
+--    delete from depozit where id_depozit > 604;
+end;
+/
+
+drop trigger limitare_depozite;
+
+
+11.
+--Fiind sezonul reducerilor, majoritatea produselor 
+--vor fi reduse și nu se poate mări prețul acestora. 
+--Creați un trigger prin care să nu se permită 
+--creșterea prețului produselor.
+
+create or replace trigger crestere_pret
+    before update of pret_produs on produs
+    for each row
+    when (new.pret_produs > old.pret_produs)
+begin
+    RAISE_APPLICATION_ERROR(-20101, 'Pretul produselor nu poate fi majorat.');
+end;
+/
+
+update produs
+set pret_produs = pret_produs + 1
+where id_produs = 500;
+
+drop trigger crestere_pret;
+
+
+12.
+--Creați un trigger care să îi dea permisiuni 
+--de modificare a schemei doar userului 'SYSTEM'. 
+--Salvați toate modificările în tabelul audit_user.
+
+create table audit_user(
+    utilizator varchar2(30),
+    nume_bd varchar2(50),
+    eveniment varchar2(20),
+    nume_obiect varchar2(30),
+    data date
+);
+
+create or replace trigger audit_schema
+    before create or alter or drop on schema
+begin
+    if user != 'SYSTEM' then
+        RAISE_APPLICATION_ERROR(-20102, 'Doar admin-ul are dreptul sa modifice schema.');
+    end if;
+    insert into audit_user
+    values (sys.login_user, sys.database_name, sys.sysevent, sys.dictionary_obj_name, sysdate);
+end;
+/
+
+alter table depozit
+add supraf number(4);
+
+alter table depozit
+add nr_zone number(4);
+
+rollback;
+
+create table ambalaj (
+    id_ambalaj number(3) primary key,
+    id_produs number(3) not null,
+    foreign key (id_produs) references produs(id_produs),
+    pret_ambalaj number(5)
+);
+
+drop table ambalaj;
+
+--select * from audit_user;
+
+drop trigger audit_schema;
+
+
+13.
+--Definiți un pachet care să conțină toate 
+--obiectele definite în cadrul proiectului.
+
+create or replace package e13 as
+
+    procedure e6 (cod_colet colet_produs.id_colet%type);
+    
+    procedure e7 (nume curier.nume_curier%type,
+                  gr colet.greutate%type);
+                  
+    function e8 (nume curier.nume_curier%type, 
+                 an vehicul.an_vehicul%type)
+        return number;
+        
+    procedure ex9 (nume client.nume_client%type);
+
+end e13;
+/
+
+
+create or replace package body e13 as
+
+    procedure e6 (cod_colet colet_produs.id_colet%type)
+    as
+        type t_id_produs is table of colet_produs.id_produs%type;
+        t t_id_produs;
+        type t_id_depozit is table of produs.id_depozit%type index by PLS_INTEGER;
+        z t_id_depozit;
+        type dif is varray(6) of number(1);
+        d dif := dif(0, 0, 0, 0, 0);
+        cnt number(3);
+        a number(3);
+        i number(3);
+        verif number(3) := 0;
+        cod_depozit produs.id_depozit%type;
+        aux depozit.tara_depozit%type;
+    begin
+        select unique id_colet into verif
+        from colet_produs
+        where id_colet = cod_colet;
+        
+        if verif = 0 then
+            DBMS_OUTPUT.PUT_LINE('Coletul ' || cod_colet || ' nu exista.');
+        else
+            select id_produs bulk collect into t
+            from colet_produs
+            where id_colet = cod_colet;
+            
+            select count(*) into cnt
+            from colet_produs
+            where id_colet = cod_colet;
+            
+            if cnt = 0 then
+                DBMS_OUTPUT.PUT_LINE('Coletul ' || cod_colet || ' nu contine niciun produs.');
+            else
+                DBMS_OUTPUT.PUT_LINE('Coletul ' || cod_colet || ' contine produse din urmatoarele tari:');
+                for i in 1..cnt loop
+                    select id_depozit into z(i)
+                    from produs
+                    where t(i) = id_produs;
+                    
+                    select tara_depozit into aux
+                    from depozit
+                    where id_depozit = z(i);
+                    
+                    a := z(i) - 599;
+                    
+                    if d(a) = 0 then
+                        d(a) := 1; 
+                        DBMS_OUTPUT.PUT_LINE(aux);
+                    end if;
+                end loop;
+            end if;
+        end if;
+    end e6;
+    
+    procedure e7 (nume curier.nume_curier%type,
+                  gr colet.greutate%type)
+    as
+        cursor cp (x colet.greutate%type) is
+            select id_colet
+            from colet
+            where greutate <= x;
+            
+        cursor cn is
+            select pret_livrare pl
+            from livrare
+            where id_curier = (select id_curier 
+                                from curier
+                                where nume_curier = nume);
+            
+        cod_colet colet.id_colet%type;
+        suma number(10) := 0;
+        nr_colete number(3) := 0;
+        nr_produse number(4) := 0;
+        aux number(4);
+    begin
+        for i in cn loop
+            suma := suma + i.pl;
+        end loop;
+        
+        DBMS_OUTPUT.PUT_LINE('Pretul total al livrarilor efectuate de curierul '|| nume || ' este ' || suma || '.');
+        
+        open cp(gr);
+        loop
+            fetch cp into cod_colet;
+            exit when cp%notfound;
+            
+            select count(*) into aux
+            from colet_produs
+            where cod_colet = id_colet;
+            
+            nr_colete := nr_colete + 1;
+            nr_produse := nr_produse + aux;   
+        end loop;
+        close cp;
+        DBMS_OUTPUT.PUT_LINE('Sunt ' || nr_colete || ' colete care au maxim ' || gr || ' kg si contin in total ' || nr_produse || ' produse.');
+    end e7;
+    
+    function e8 (nume curier.nume_curier%type, 
+                 an vehicul.an_vehicul%type)
+        return number
+    is
+        rez number(3);
+        v number(3);
+        curryear number(4);
+    begin
+        select count(*) into v
+        from curier
+        where nume_curier = nume;
+        
+        if v = 0 then
+            --DBMS_OUTPUT.PUT_LINE('Nu exista niciun curier cu numele ' || nume || '.');
+            RAISE_APPLICATION_ERROR(-20001, 'Nu exista niciun curier cu numele ' || nume || '.');
+            return -1;
+        end if;
+            
+        select to_char(sysdate, 'YYYY') into curryear
+        from dual;
+            
+        if an < 0 or an > curryear then
+            --DBMS_OUTPUT.PUT_LINE('Anul introdus este invalid.');
+            RAISE_APPLICATION_ERROR(-20002, 'Anul introdus este invalid.');
+            return -1;
+        end if;
+        
+        select count(*) into rez
+        from vehicul v, transport t, curier c
+        where an < v.an_vehicul and
+              v.id_vehicul = t.id_vehicul and 
+              t.id_curier = c.id_curier and 
+              c.nume_curier = nume;
+              
+        DBMS_OUTPUT.PUT_LINE('Numarul de vehicule produse dupa anul ' || an || ' pe care le poate conduce curierul ' || nume || ' este: ');
+        return rez; 
+    end e8;
+    
+    procedure ex9 (nume client.nume_client%type)
+    as
+        suma number(11);
+        vf client.id_client%type;
+    begin
+        select id_client into vf
+        from client
+        where nume_client = nume;
+        
+        select sum(p.pret_produs) into suma
+        from client c
+        join livrare l on c.id_client = l.id_client
+        join colet co on l.id_livrare = co.id_livrare
+        join colet_produs cp on co.id_colet = cp.id_colet
+        join produs p on cp.id_produs = p.id_produs
+        where c.nume_client = nume;
+        DBMS_OUTPUT.PUT_LINE(nume || ' a cumparat produse in valoare de ' || suma || ' lei.');
+        exception
+            WHEN NO_DATA_FOUND THEN
+                RAISE_APPLICATION_ERROR(-20001, 'Clientul ' || nume || ' nu exista.');
+                --DBMS_OUTPUT.PUT_LINE('Clientul ' || nume || ' nu exista.');
+            WHEN TOO_MANY_ROWS THEN
+                RAISE_APPLICATION_ERROR(-20002, 'Too many rows.');
+    end ex9;
+
+end e13;
+/
